@@ -7,7 +7,7 @@
 
 > Five behavioral principles for coding agents. One source of truth. Every agent configured.
 
-**agent-creed** is a tiny, boring, airtight package that drops the same set of coding-agent guardrails into your repo — no matter which agent or IDE you use. Claude Code, Codex, Cursor, Copilot, Gemini, Windsurf, Cline, Aider, Continue, Goose, Junie, Qwen, Amp, OpenHands — all read the same principles, all stay in sync.
+**agent-creed** is a tiny, focused package that writes the same coding-agent guardrails into every rule file your repo needs — `CLAUDE.md`, `.cursor/rules/`, `AGENTS.md`, `.clinerules`, `.github/copilot-instructions.md`, and 10 more — from a single source. Claude Code, Codex, Cursor, Copilot, Gemini, Windsurf, Cline, Aider, Continue, Goose, Junie, Qwen, Amp, OpenHands — every agent in your repo reads the same principles, in sync.
 
 ### Two ways to install
 
@@ -75,12 +75,18 @@ curl -fsSL https://raw.githubusercontent.com/humancto/agent-creed/main/install.s
 
 `agent-creed install` detects which agents your repo is already set up for (by looking for `.cursor/`, `.github/`, `CLAUDE.md`, etc.) and writes their rule file. Files managed by agent-creed carry a banner; re-running is idempotent.
 
-### Specific agents
+### Install for a specific agent
+
+Generate just the rule file you need — `CLAUDE.md`, `.cursor/rules/agent-creed.mdc`, `AGENTS.md`, or any of the 14 supported outputs:
 
 ```bash
-npx agent-creed install --agent=claude,cursor,codex
-npx agent-creed install --all       # every supported agent
-npx agent-creed install --force     # overwrite non-managed files
+npx agent-creed install --agent=claude              # writes CLAUDE.md
+npx agent-creed install --agent=cursor              # writes .cursor/rules/agent-creed.mdc
+npx agent-creed install --agent=codex               # writes AGENTS.md
+npx agent-creed install --agent=copilot             # writes .github/copilot-instructions.md
+npx agent-creed install --agent=claude,cursor,codex # multiple at once
+npx agent-creed install --all                       # every supported agent
+npx agent-creed install --force                     # overwrite existing non-managed files
 ```
 
 ### Install as a Claude Code plugin
@@ -133,6 +139,38 @@ principles.md            ← canonical source of truth (edit this)
 ```
 
 CI runs `node scripts/sync.mjs --check` on every PR — if a generated file drifts from `principles.md`, the build fails. There is no "oops, I edited CLAUDE.md and forgot to update Cursor."
+
+---
+
+## FAQ
+
+### What is a `CLAUDE.md` file?
+
+`CLAUDE.md` at the root of your repo is [Claude Code's](https://docs.claude.com/en/docs/claude-code/overview) convention for project-level behavioral instructions — the model reads it automatically. agent-creed generates one from the five principles so you don't have to draft it yourself.
+
+### Can the same rules work for Cursor, Claude Code, Codex, and Copilot at once?
+
+Yes — that's the point. agent-creed writes `CLAUDE.md` for Claude Code, `.cursor/rules/agent-creed.mdc` for Cursor, `AGENTS.md` for Codex (and any tool following the AGENTS.md standard), `.github/copilot-instructions.md` for Copilot, plus 10 more, all from a single `principles.md`. One edit → every agent updates on the next `npm run sync`.
+
+### I already have a `CLAUDE.md`. Do I need this?
+
+Only if you want one or both of: (a) the five-principle behavioral core (hidden-assumption detection, simplicity, surgical edits, goal-driven execution, verify-before-reporting), or (b) automatic sync across more than one agent. If you hand-maintain a single file and it works, you don't.
+
+### How do I keep `.cursor/rules` and `CLAUDE.md` in sync without forgetting one?
+
+Edit `principles.md`, run `npm run sync` (or `npx agent-creed install`). Both files are regenerated from the same source. In CI, `node scripts/sync.mjs --check` fails the build if any derivative file has drifted — so the invariant is a test, not a social contract.
+
+### Does this work with the AGENTS.md standard?
+
+Yes. `AGENTS.md` is one of the 14 output files and contains the same content as `CLAUDE.md`. Any agent that reads `AGENTS.md` (OpenAI Codex CLI, and a growing list of others) gets the same principles.
+
+### Can I customize the principles for my project?
+
+Fork the repo, edit `principles.md`, run `npm run sync`, commit. The generator writes the exact content of `principles.md` into every target file — so the per-agent files are always a faithful copy of whatever `principles.md` says.
+
+### What's the difference between this and `forrestchang/andrej-karpathy-skills`?
+
+Upstream ships 4 principles for Claude Code + Cursor (2 agents). agent-creed extends it with a 5th principle (`Verify Before Reporting`), a safety guardrails section, 14 agents, a generator, a CLI, CI drift detection, and tests. See [Credits & Lineage](#credits--lineage) for the full comparison.
 
 ---
 
