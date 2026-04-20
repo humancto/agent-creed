@@ -1,8 +1,7 @@
 {
   "name": "agent-creed",
   "owner": {
-    "name": "humancto",
-    "url": "https://github.com/humancto"
+    "name": "humancto"
   },
   "metadata": {
     "description": "Behavioral principles for coding agents.",
