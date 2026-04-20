@@ -24,7 +24,7 @@ LLM coding agents fail in a small number of reliable ways:
 
 agent-creed is five principles that name each failure and prescribe the fix. You ship them as the *same text* to every agent, so behavior stops depending on which tool a teammate happens to use.
 
-Content derived in part from [Andrej Karpathy's observations on LLM coding pitfalls](https://x.com/karpathy/status/2015883857489522876). Not affiliated with Andrej.
+These principles trace back to [Andrej Karpathy's observations on LLM coding pitfalls](https://x.com/karpathy/status/2015883857489522876), first codified into a named four-principle set by [forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills). agent-creed extends that work with a fifth principle, a safety section, and 14 agents behind one source of truth. See [Credits & Lineage](#credits--lineage) for the full attribution and a comparison of what's inherited vs. added.
 
 ---
 
@@ -142,6 +142,42 @@ agent-creed itself follows its own principles:
 
 ---
 
+## Credits & Lineage
+
+agent-creed did not invent these principles. It stands on three pieces of prior work:
+
+1. **[Andrej Karpathy](https://x.com/karpathy/status/2015883857489522876)** — the conceptual origin. The observations about how LLM coding agents fail (wrong assumptions, overengineering, drive-by refactoring, weak success criteria) come from Andrej's public post. Not affiliated with Andrej.
+
+2. **[forrestchang/andrej-karpathy-skills](https://github.com/forrestchang/andrej-karpathy-skills)** by [@jiayuan_jy](https://x.com/jiayuan_jy) — the first codification of Andrej's observations into four named principles with actionable bullets, plus a Claude Code plugin and a Cursor rule. The four principle names (`Think Before Coding`, `Simplicity First`, `Surgical Changes`, `Goal-Driven Execution`) and roughly 80% of their bullet prose come directly from this repo. MIT-licensed; attribution preserved.
+
+3. **[humancto/andrej-karpathy-skills](https://github.com/humancto/andrej-karpathy-skills)** (branch `claude/evaluate-agent-compatibility-KEsuN`) — the scaffold this repo was imported from. It extended upstream with the 5th principle, the safety section, the generator architecture, the CLI, 14-agent coverage, tests, and CI.
+
+### What agent-creed adds on top of forrestchang/andrej-karpathy-skills
+
+| Dimension | forrestchang/andrej-karpathy-skills | agent-creed |
+|---|---|---|
+| Principles | 4 | **5** — adds `Verify Before Reporting` |
+| Safety guardrails | — | ✅ Destructive ops, shared state, secrets, scope drift |
+| Supported agents | 2 (Claude Code, Cursor) | **14** — Claude, Codex, Gemini, Copilot, Cursor, Windsurf, Continue, Cline, Aider, Goose, Junie, Qwen, Amp, OpenHands |
+| Source of truth | `CLAUDE.md` + hand-maintained Cursor rule (two files in parallel) | Single `principles.md` → generator writes every derivative |
+| Drift prevention | Social contract | `node scripts/sync.mjs --check` in CI |
+| Install | curl / Claude Code plugin | `npx agent-creed install` with auto-detection, `--agent=...`, `--all`, `--force`; bash fallback |
+| Idempotency | — | Managed-by banner; reinstall is a no-op unless principles change |
+| Tests | — | 6 Node tests covering drift, CLI, manifest |
+| Distribution | GitHub raw + Claude Code plugin marketplace | Same, plus npm-ready (`npx agent-creed`) |
+
+### What agent-creed has *not* ported from upstream
+
+- `README.zh.md` — Forrest ships a Chinese translation of the README. agent-creed is English-only. Contributions welcome.
+- `EXAMPLES.md` — upstream's good-vs-bad example gallery.
+- Separate `CURSOR.md` setup guide — folded into a row of the Supported Agents table here.
+
+### One specific content change
+
+agent-creed replaces upstream's principle 2 bullet *"No error handling for impossible scenarios"* with *"Validate only at system boundaries (user input, external APIs). Trust internal invariants."* — same spirit, more actionable.
+
+---
+
 ## License
 
-MIT © agent-creed contributors
+MIT © agent-creed contributors. Inherited text from forrestchang/andrej-karpathy-skills is likewise MIT-licensed.
