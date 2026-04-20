@@ -1,6 +1,8 @@
 {
   "name": "agent-creed",
-  "id": "agent-creed",
+  "owner": {
+    "name": "humancto"
+  },
   "metadata": {
     "description": "Behavioral principles for coding agents.",
     "version": "0.1.0"
@@ -11,7 +13,22 @@
       "source": "./",
       "description": "Five principles to reduce the most common coding-agent failures: hidden assumptions, overengineering, scope drift, and unverified claims.",
       "version": "0.1.0",
-      "keywords": ["guidelines", "principles", "agents"],
+      "author": {
+        "name": "humancto",
+        "url": "https://github.com/humancto"
+      },
+      "homepage": "https://github.com/humancto/agent-creed#readme",
+      "repository": "https://github.com/humancto/agent-creed",
+      "license": "MIT",
+      "keywords": [
+        "guidelines",
+        "principles",
+        "agents",
+        "claude-code",
+        "cursor",
+        "copilot",
+        "coding-standards"
+      ],
       "category": "workflow"
     }
   ]
