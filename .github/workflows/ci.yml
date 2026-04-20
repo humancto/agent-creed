@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check generated files match principles.md
+        run: node scripts/sync.mjs --check
+
+      - name: Test suite
+        run: npm test
+
+      - name: CLI smoke test
+        run: |
+          mkdir -p /tmp/agent-creed-smoke/.cursor /tmp/agent-creed-smoke/.github
+          cd /tmp/agent-creed-smoke
+          node "$GITHUB_WORKSPACE/bin/agent-creed.mjs" install
+          test -f .cursor/rules/agent-creed.mdc
+          test -f .github/copilot-instructions.md
