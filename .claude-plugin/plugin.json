@@ -3,6 +3,19 @@
   "description": "Behavioral principles for coding agents — surface assumptions, keep it simple, change only what's needed, verify before reporting.",
   "version": "0.1.0",
   "license": "MIT",
-  "keywords": ["guidelines", "principles", "agents", "best-practices"],
+  "author": {
+    "name": "humancto",
+    "url": "https://github.com/humancto"
+  },
+  "homepage": "https://github.com/humancto/agent-creed#readme",
+  "repository": "https://github.com/humancto/agent-creed",
+  "keywords": [
+    "guidelines",
+    "principles",
+    "agents",
+    "best-practices",
+    "claude-code",
+    "coding-standards"
+  ],
   "skills": ["./skills/agent-creed"]
 }
