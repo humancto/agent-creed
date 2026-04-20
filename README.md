@@ -1,11 +1,25 @@
 # agent-creed
 
+[![CI](https://github.com/humancto/agent-creed/actions/workflows/ci.yml/badge.svg)](https://github.com/humancto/agent-creed/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
+[![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-plugin-8A63D2)](#install-as-a-claude-code-plugin)
+[![Agents supported](https://img.shields.io/badge/agents-14-brightgreen)](#supported-agents)
+
 > Five behavioral principles for coding agents. One source of truth. Every agent configured.
 
 **agent-creed** is a tiny, boring, airtight package that drops the same set of coding-agent guardrails into your repo — no matter which agent or IDE you use. Claude Code, Codex, Cursor, Copilot, Gemini, Windsurf, Cline, Aider, Continue, Goose, Junie, Qwen, Amp, OpenHands — all read the same principles, all stay in sync.
 
+### Two ways to install
+
+**Any repo, any agent (Node):**
 ```bash
 npx agent-creed install         # auto-detects your agents and writes their rule files
+```
+
+**Claude Code users — one command inside the CLI:**
+```
+/plugin marketplace add humancto/agent-creed
+/plugin install agent-creed@agent-creed
 ```
 
 That's the whole idea.
@@ -69,16 +83,16 @@ npx agent-creed install --all       # every supported agent
 npx agent-creed install --force     # overwrite non-managed files
 ```
 
-### As a Claude Code plugin
+### Install as a Claude Code plugin
 
-From inside Claude Code:
+From inside Claude Code, this repo is its own [plugin marketplace](https://docs.claude.com/en/docs/claude-code/plugins-marketplaces) — no separate registry required:
 
 ```
 /plugin marketplace add humancto/agent-creed
 /plugin install agent-creed@agent-creed
 ```
 
-This registers agent-creed as a Claude Skill available in every project.
+This registers agent-creed as a Claude Skill available in every project. The underlying manifests are `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`.
 
 ---
 
