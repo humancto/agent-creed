@@ -1,0 +1,41 @@
+{
+  "name": "agent-creed",
+  "version": "0.1.0",
+  "description": "Behavioral principles for coding agents — one source of truth, every agent configured.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/humancto/agent-creed.git"
+  },
+  "bin": {
+    "agent-creed": "bin/agent-creed.mjs",
+    "creed": "bin/agent-creed.mjs"
+  },
+  "scripts": {
+    "sync": "node scripts/sync.mjs",
+    "check": "node scripts/sync.mjs --check",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "principles.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "agents",
+    "claude",
+    "codex",
+    "cursor",
+    "copilot",
+    "gemini",
+    "coding-agent",
+    "rules",
+    "guidelines",
+    "agents-md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}
